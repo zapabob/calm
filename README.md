@@ -1,8 +1,20 @@
-# CALM: Continuous Autoregressive Language Models
+# CALM: Continuous Autoregressive Language Models + NKAT
 [![arXiv](https://img.shields.io/badge/arXiv-2510.27688-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2510.27688)
 [![code](https://img.shields.io/badge/Github-Code-keygen.svg?logo=github)](https://github.com/shaochenze/calm)
 [![model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging_Face-Model-blue.svg)](https://huggingface.co/collections/cccczshao/calm)
 [![Blog Post](https://img.shields.io/badge/Blog%20Post-Read%20Here-blue)](https://shaochenze.github.io/blog/2025/CALM)
+
+## NKAT Integration
+
+This fork integrates **NKAT (Non-commutative Kolmogorov-Arnold Theory)** with CALM to add geometric regularization to the continuous latent space using Spin(8) triality structure.
+
+### Key Features of NKAT Integration:
+- 🔬 **Geometric Regularization**: Constrains latent vectors to lie on SO(8) manifold
+- 🎯 **Triality Structure**: Decomposes information into (v, s, c) components representing logical, physical, and contextual aspects
+- 🛡️ **Mass Gap Potential**: Prevents hallucination drift through geometric constraints
+- ⚖️ **Golden Ratio Balance**: Alpha parameter (0.382) optimally balances norm conservation and triality interaction
+
+The NKAT integration adds a regularization term to the energy loss that enforces geometric structure on the continuous latent space, potentially improving model stability and interpretability.
 
 ## Overview
 <p align="center">
@@ -179,6 +191,26 @@ torchrun --nnodes 1 --node_rank 0 --nproc_per_node 8 \
 </details>
 
 We also provide alternative training scripts for generative heads based on **Diffusion** and **Flow Matching**, available at `train/train_diffusion.sh` and `train/train_flow.sh`. However, we found their performance to be slightly below that of the Energy-based head in our experiments.
+
+### 2.1. (Optional) Train CALM with NKAT Geometric Regularization
+
+For enhanced stability and geometric structure in the continuous latent space, you can train CALM with NKAT integration:
+
+```bash
+bash train/train_energy_nkat.sh
+```
+
+The NKAT-enhanced model adds geometric regularization based on Spin(8) triality:
+- Constrains latent vectors to SO(8) manifold structure
+- Decomposes information into (v, s, c) triality components
+- Adds mass gap potential to prevent hallucination drift
+- Uses golden ratio (α=0.382) for optimal energy balance
+
+NKAT parameters can be configured in the training script:
+- `nkat_weight`: Weight for NKAT loss (default: 0.01)
+- `nkat_spin_dim`: Dimension of Spin(8) components (default: 8)
+- `nkat_alpha`: Energy balance parameter (default: 0.382)
+- `nkat_learnable_alpha`: Whether to learn alpha (default: False)
 
 
 ### 3. (Optional) Train a Baseline Autoregressive Model
